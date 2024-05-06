@@ -1,0 +1,339 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+	<title>agence</title>
+	<link href="css/style1.css" rel="stylesheet" type="text/css" media="all" />
+	
+	
+
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+
+<body>
+	<div class="header">
+		<div class="wrap">
+			<div class="header-bot">
+				<div class="logo">
+					<a href="index.html" th:each="agence:${agence}">
+						<img th:src="${agence.imgbank}" alt="">
+					</a>
+				</div>
+				<div class="cart">
+					<ul class="ph-no">
+						<li class="item  first_item">
+							<div class="item_html">
+								<span class="text1">Rechercher</span>
+							</div>
+						</li>
+					</ul>
+					<div id="top-search">
+						<form method="get" action="#">
+							<input type="text" name="s" class="input-search">
+							<input type="submit" value="Search" id="submit">
+						</form>
+					</div>
+					<div class="menu-main">
+						<ul class="dc_css3_menu">
+							<li class="active">
+								<a th:href="@{/}">Home</a>
+							</li>
+							<li>
+								<a href="#">About</a>
+							</li>
+							<li>
+								<a href="#">espace vendeurs</a>
+							</li>
+							<li>
+								<a th:href="@{/admin}">espace admin</a>
+							</li>
+						</ul>
+						<div class="clear"></div>
+					</div>
+				</div>
+				<div class="clear"></div>
+			</div>
+		</div>
+	</div>
+	<div th:each="agence:${agence}">
+					solde: <p th:text="${agence.capital}"></p>
+				</div>
+	
+	<div class="header-bottom">
+		<div class="wrap">
+			<div class="single">
+				<div class="heading">
+					<h3>Gestion des demandes de creation de compte</h3>
+			<div class="section group">
+					<div class="col span_2_of_contact">
+						<div class="contact-form">
+						<table style="width: 75%; margin: 0 auto; border-collapse: collapse;">
+  <tr>
+     <th style="padding: 8px; border: 1px solid #ccc; background-color: #f2f2f2; font-weight: bold;">username</th>
+    <th style="padding: 8px; border: 1px solid #ccc; background-color: #f2f2f2; font-weight: bold;">cni</th>
+    <th style="padding: 8px; border: 1px solid #ccc; background-color: #f2f2f2; font-weight: bold;">recto</th>
+    <th style="padding: 8px; border: 1px solid #ccc; background-color: #f2f2f2; font-weight: bold;">verso</th>
+    
+    <th style="padding: 8px; border: 1px solid #ccc; background-color: #f2f2f2; font-weight: bold;">Actions</th>
+  </tr>
+  <tr th:each="dem:${demandesagence}">
+    
+    <td th:text="${dem.username}" style="padding: 8px; border: 1px solid #ccc;"></td>
+    <td th:text="${dem.numcni}" style="padding: 8px; border: 1px solid #ccc;"></td>
+    <td  style="padding: 8px; border: 1px solid #ccc;"><img th:src="${dem.recto}"/></td>
+    <td  style="padding: 8px; border: 1px solid #ccc;"><img th:src="${dem.verso}"/></td>
+    
+    <td style="padding: 8px; border: 1px solid #ccc;">
+     <button style="background-color: #f2f2f2; color: #fff; border: none; padding: 6px 12px; cursor: pointer;"><a th:href="@{/addclient(id=${dem.id})}"><h3>Autoriser</h3></a></button>
+	<button style="background-color:#f2f2f2; color: #fff; border: none; padding: 6px 12px; cursor: pointer;"><a th:href="@{/demandesup(id=${dem.id})}"><h3>refuser</h3></a></button>
+				
+    </td>
+  </tr>
+  
+</table>
+<p th:each="agence:${agence}">
+<button style="background-color: #f2f2f2; color: #fff; border: none; padding: 6px 12px; cursor: pointer;">
+<a th:href="@{/updateagence(id=${agence.id})}"><h3>mise à jour</h3></a>
+</button></p>
+
+ 
+	<div class="tab1">
+    <button class="tablinks active" onclick="afficherFormulaire()">dépot d'argent</button>
+  </div>
+	<div id="mon-formulaire"  class="tab3">
+<section class="section2">
+<fieldset>
+<figure><h1><font color="blue">dépôt</font></h1>
+<font color="red">[[${messagedepoagent}]]</font>
+</figure>
+<form th:action="@{/depotag}" method="post" th:object="${Compte}" id="connexion-form" class="visible" enctype="multipart/form-data">
+
+
+
+     montant<input name="somme" type="texte" id="nom" placeholder="entrez le montant" required/>
+ 
+     <div>
+									<span>
+										<label>client</label>
+									</span>
+									
+									<span>
+									 <select class="textbox" name="numéroDestinataire" id="idvoiture"  required>
+                                        <option value="Aucun"></option>
+                                        <div th:each="client:${listeclients}"><option th:value="${client.numcni}"><b th:text="${client.username}"></b></option></div>
+                                   </select>
+			
+									</span>
+								</div>
+      
+                                <div>
+									<span>
+										<input type="submit" value="Submit">
+									</span>
+								</div>
+<input type="reset" value="ANNULER" name="Annuler"/>
+</fieldset>
+</form>
+
+</section>
+</div>							
+								
+								
+								
+								
+									
+						<h3>envoyer un message à un client</h3>
+
+							<form method="post" th:action="@{/messageclient}" th:object="${Anonce}">
+								<div>
+								
+									<span>
+										<label>titre</label>
+									</span>
+									<span>
+										<input name="titre" type="text" class="textbox">
+									</span>
+								</div>
+								
+								<div>
+									<span>
+										<label>client</label>
+									</span>
+									
+									<span>
+									 <select class="textbox" name="numbenef" id="idvoiture"  required>
+                                        <option value="Aucun"></option>
+                                        <div th:each="client:${listeclients}"><option th:value="${client.numcni}"><b th:text="${client.username}"></b></option></div>
+                                   </select>
+			
+									</span>
+								</div>
+								<div>
+									<span>
+										<label>description</label>
+									</span>
+									<span>
+										<textarea name="description"> </textarea>
+									</span>
+								</div>
+								<div>
+									<span>
+										<input type="submit" value="Submit">
+									</span>
+								</div>
+							</form>
+						</div>
+					</div>
+		
+			
+				</div>
+				
+				
+				
+			
+					
+						
+						
+						
+					<div class="about-services">
+						<h3>Tous les clients</h3>
+						<div th:each="compte:${compteagence}"  class="client">
+							<div class="about-team-left">
+								<a href="#">
+									<img th:src="${compte.banque.Imgbank}" title="cars">
+								</a>
+							</div>
+							<div class="about-team-right">
+								nom client:<p th:text="${compte.user.username}"></p>
+								email: <p th:text="${compte.user.email}"></p>
+								cni: <p th:text="${compte.user.numcni}"></p>
+							</div>
+							<div class="clear"> </div>
+						</div>
+						
+						
+					</div>
+					<div class="clear"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="footer">
+		<div class="wrap">
+			<div class="footer-top">
+				<div class="col_1_of_5 span_1_of_5">
+					<div class="footer-grid twitts">
+						<h3>Latest Tweets</h3>
+						<p>
+							<label>@Lorem ipsum</label>dolor sit amet, consectetur adipisicing elit.</p>
+						<span>10 minutes ago</span>
+						<p>
+							<label>@consectetur</label>dolor sit amet, consectetur adipisicing elit.</p>
+						<span>15 minutes ago</span>
+					</div>
+				</div>
+				<div class="col_1_of_5 span_1_of_5">
+					<div class="footer-grid center-grid">
+						<h3>Recent posts</h3>
+						<ul>
+							<li>
+								<a href="#">eiusmod temporinc</a>
+							</li>
+							<li>
+								<a href="#">adipisicing elit, sed</a>
+							</li>
+							<li>
+								<a href="#">mod tempor incididunt</a>
+							</li>
+							<li>
+								<a href="#">dipisicing elit, sed do</a>
+							</li>
+							<li>
+								<a href="#">eiusmod temporinc</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="col_1_of_5 span_1_of_5">
+					<div class="footer-grid twitts">
+						<h3>Our Company</h3>
+						<div class="f_menu">
+							<ul>
+								<li>About your Company Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh eui</li>
+								<li>Terms &amp; conditions Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh eui</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div class="col_1_of_5 span_1_of_5">
+					<div class="call_info">
+						<p class="txt_3">Call us toll free:</p>
+						<p class="txt_4">1 800 234 23456</p>
+					</div>
+				</div>
+				<div class="col_1_of_5 span_1_of_5">
+					<div class="footer-grid twitts">
+						<h3>Get in touch</h3>
+						<ul class="follow_icon">
+							<li>
+								<a href="#" style="opacity: 1;">
+									<img src="images/follow_icon.png" alt="">
+								</a>
+							</li>
+							<li>
+								<a href="#" style="opacity: 1;">
+									<img src="images/follow_icon1.png" alt="">
+								</a>
+							</li>
+							<li>
+								<a href="#" style="opacity: 1;">
+									<img src="images/follow_icon2.png" alt="">
+								</a>
+							</li>
+							<li>
+								<a href="#" style="opacity: 1;">
+									<img src="images/follow_icon3.png" alt="">
+								</a>
+							</li>
+							<li>
+								<a href="#" style="opacity: 1;">
+									<img src="images/follow_icon4.png" alt="">
+								</a>
+							</li>
+							<li>
+								<a href="#" style="opacity: 1;">
+									<img src="images/follow_icon5.png" alt="">
+								</a>
+							</li>
+						</ul>
+						<p>+1 111-111-1111</p>
+						<span>
+							<a href="mailto:info@example.com">support(at)carssale.com</a>
+						</span>
+					</div>
+				</div>
+				<div class="clear"></div>
+			</div>
+		</div>
+	</div>
+	<div class="copy-right">
+		<div class="wrap">
+			<p>Copyright &copy; 2023 annonces de ventes de voiture. All Rights Reserved | Design by ousmane lagrange
+				<a href="#"> Groupes 12</a>
+			</p>
+		</div>
+	</div>
+	<script>
+		function afficherFormulaire() {
+			var formulaire = document.getElementById("mon-formulaire");
+			if (formulaire.style.display === "none") {
+				formulaire.style.display = "block";
+			} else {
+				formulaire.style.display = "none";
+			}
+		}
+	</script>
+</body>
+
+</html>

@@ -1,0 +1,312 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+	<title>Cars Sale a Auto mobile Category Website Template | About :: w3layouts</title>
+	<link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+
+<body>
+	<div class="header">
+		<div class="wrap">
+			<div class="header-bot">
+				<div class="logo">
+					<a href="index.html">
+						<img src="images/logo.png" alt="">
+					</a>
+				</div>
+				<div class="cart">
+					<ul class="ph-no">
+						<li class="item  first_item">
+							<div class="item_html">
+								<span class="text1">Rechercher une voiture</span>
+							</div>
+						</li>
+					</ul>
+					<div id="top-search">
+						<form method="get" action="#">
+							<input type="text" name="s" class="input-search">
+							<input type="submit" value="Search" id="submit">
+						</form>
+					</div>
+					<div class="menu-main">
+						<ul class="dc_css3_menu">
+							<li class="active">
+								<a th:href="@{/}">Home</a>
+							</li>
+							<li>
+								<a href="#">About</a>
+							</li>
+							<li>
+								<a href="#">espace vendeurs</a>
+							</li>
+							<li>
+								<a href="#">espace admin</a>
+							</li>
+						</ul>
+						<div class="clear"></div>
+					</div>
+				</div>
+				<div class="clear"></div>
+			</div>
+		</div>
+	</div>
+	<div class="header-bottom">
+		<div class="wrap">
+			<div class="single">
+				<div class="heading">
+					<h3>Gestion des voitures</h3>
+			<div class="section group">
+					<div class="col span_2_of_contact">
+						<div class="contact-form">
+						
+						<h3>Ajouter une voiture</h3>
+
+							<form method="post" th:action="@{/addcars}" th:object="${Voiture}" enctype="multipart/form-data">
+								<div>
+							
+									<span>
+										<label>kilométrage</label>
+									</span>
+									<span>
+										<input name="kilo" type="text" class="textbox">
+									</span>
+								</div>
+								<div>
+									<span>
+										<label>Date de fabrication</label>
+									</span>
+									<span>
+										<input name="fabri" type="date" class="textbox">
+									</span>
+								</div>
+								<div>
+									<span>
+										<label>type moteur</label>
+									</span>
+									
+									<span>
+									 <select class="textbox" name="type_carburant" id="type_carburant"  required>
+                       
+                                        <option value="Essence">Essence</option>
+                                        <option value="Diezel">Diezel</option>
+                                        <option value="Electrique">Electrique</option>
+                                   </select>
+			
+									</span>
+								</div>
+								<div>
+									<span>
+										<label>model</label>
+									</span>
+									
+										<span>
+										<input name="model" type="text" class="textbox">
+									</span>
+								</div>
+									<div>
+									<span>
+										<label>marque</label>
+									</span>
+										<span>
+										<input name="marque" type="text" class="textbox">
+									</span>
+									
+								</div>
+								<div>
+									<span>
+										<label>image</label>
+									</span>
+										<span>
+										<input name="image" type="file" class="textbox">
+									</span>
+									
+								</div>
+								
+
+
+							
+								<div>
+									<span>
+										<input type="submit" value="Submit">
+									</span>
+								</div>
+							</form>
+						</div>
+					</div>
+		
+			
+				</div>
+				
+				
+				
+				
+				<div class="about-top">
+					<div class="about-topgrids">
+						<div class="about-topgrid1">
+							<h3>voir les anonces</h3>
+							<div  th:each="anonce:${anonces}" class="client">
+							<div class="about-team-left">
+								<a href="#">
+									<img th:src="${anonce.voiture.image}" title="cars">
+								</a>
+							</div>
+							<div class="about-team-right">
+								<p th:text="${anonce.titre}"></p>
+								<p th:text="${anonce.prix}"></p>
+								<p th:text="${anonce.description}"></p>
+								<p th:text="${anonce.voiture.type_carburant}"></p>
+								<p th:text="${anonce.voiture.model}"></p>
+								</div>
+							<div class="clear"> </div>
+						</div>
+						
+					</div>
+	
+ 
+							
+								
+						</div>
+					</div>
+					
+						
+						
+						
+					<div class="about-services">
+						<h3>Nouvelles Voitures</h3>
+						<div th:each="voit:${voitures}"  class="client">
+							<div class="about-team-left">
+								<a href="#">
+									<img th:src="${voit.image}" title="cars">
+								</a>
+								<p><button  style="background-color: #fff; color: #fff; border: none;
+							 padding: 6px 12px; cursor: pointer;">
+							 <a th:href="@{/voituresup(id=${voit.id_voiture})}"><h3>supprimer</h3></a></button></p>
+								
+							</div>
+							<div class="about-team-right">
+								<p th:text="${voit.marque}"></p>
+								<p th:text="${voit.model}"></p>
+								<p th:text="${voit.date_fabrication}"></p>
+								<p th:text="${voit.type_carburant}"></p>
+								
+							</div>
+							<div class="clear"> </div>
+						</div>
+						
+					</div>
+					<div class="clear"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="footer">
+		<div class="wrap">
+			<div class="footer-top">
+				<div class="col_1_of_5 span_1_of_5">
+					<div class="footer-grid twitts">
+						<h3>Latest Tweets</h3>
+						<p>
+							<label>@Lorem ipsum</label>dolor sit amet, consectetur adipisicing elit.</p>
+						<span>10 minutes ago</span>
+						<p>
+							<label>@consectetur</label>dolor sit amet, consectetur adipisicing elit.</p>
+						<span>15 minutes ago</span>
+					</div>
+				</div>
+				<div class="col_1_of_5 span_1_of_5">
+					<div class="footer-grid center-grid">
+						<h3>Recent posts</h3>
+						<ul>
+							<li>
+								<a href="#">eiusmod temporinc</a>
+							</li>
+							<li>
+								<a href="#">adipisicing elit, sed</a>
+							</li>
+							<li>
+								<a href="#">mod tempor incididunt</a>
+							</li>
+							<li>
+								<a href="#">dipisicing elit, sed do</a>
+							</li>
+							<li>
+								<a href="#">eiusmod temporinc</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="col_1_of_5 span_1_of_5">
+					<div class="footer-grid twitts">
+						<h3>Our Company</h3>
+						<div class="f_menu">
+							<ul>
+								<li>About your Company Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh eui</li>
+								<li>Terms &amp; conditions Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh eui</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div class="col_1_of_5 span_1_of_5">
+					<div class="call_info">
+						<p class="txt_3">Call us toll free:</p>
+						<p class="txt_4">1 800 234 23456</p>
+					</div>
+				</div>
+				<div class="col_1_of_5 span_1_of_5">
+					<div class="footer-grid twitts">
+						<h3>Get in touch</h3>
+						<ul class="follow_icon">
+							<li>
+								<a href="#" style="opacity: 1;">
+									<img src="images/follow_icon.png" alt="">
+								</a>
+							</li>
+							<li>
+								<a href="#" style="opacity: 1;">
+									<img src="images/follow_icon1.png" alt="">
+								</a>
+							</li>
+							<li>
+								<a href="#" style="opacity: 1;">
+									<img src="images/follow_icon2.png" alt="">
+								</a>
+							</li>
+							<li>
+								<a href="#" style="opacity: 1;">
+									<img src="images/follow_icon3.png" alt="">
+								</a>
+							</li>
+							<li>
+								<a href="#" style="opacity: 1;">
+									<img src="images/follow_icon4.png" alt="">
+								</a>
+							</li>
+							<li>
+								<a href="#" style="opacity: 1;">
+									<img src="images/follow_icon5.png" alt="">
+								</a>
+							</li>
+						</ul>
+						<p>+1 111-111-1111</p>
+						<span>
+							<a href="mailto:info@example.com">support(at)carssale.com</a>
+						</span>
+					</div>
+				</div>
+				<div class="clear"></div>
+			</div>
+		</div>
+	</div>
+	<div class="copy-right">
+		<div class="wrap">
+			<p>Copyright &copy; 2023 annonces de ventes de voiture. All Rights Reserved | Design by ousmane lagrange
+				<a href="#"> Groupes 12</a>
+			</p>
+		</div>
+	</div>
+</body>
+
+</html>

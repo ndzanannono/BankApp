@@ -1,0 +1,364 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+	<title>Client</title>
+	<link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+
+<body>
+	<div class="header">
+		<div class="wrap">
+			<div class="header-bot">
+				<div class="logo">
+					<a href="index.html" th:each="client:${compteclient}">
+						<img th:src="${client.banque.Imgbank}" alt="">
+					</a>
+				</div>
+				<div class="cart">
+					<ul class="ph-no">
+						<li class="item  first_item">
+							<div class="item_html">
+								<span class="text1">Recherche</span>
+							</div>
+						</li>
+					</ul>
+					<div id="top-search">
+						<form method="get" action="#">
+							<input type="text" name="s" class="input-search">
+							<input type="submit" value="Search" id="submit">
+						</form>
+					</div>
+					<div class="menu-main">
+						<ul class="dc_css3_menu">
+							<li class="active">
+								<a th:href="@{/}">Home</a>
+							</li>
+							<li>
+								<a href="#">About</a>
+							</li>
+							<li>
+								<a th:href="@{/user}">espace vendeurs</a>
+							</li>
+							<li>
+								<a href="#">espace admin</a>
+							</li>
+						</ul>
+						<div class="clear"></div>
+					</div>
+				</div>
+				<div class="clear"></div>
+			</div>
+		</div>
+	</div>
+<div th:each="compte:${compteclient}">
+ SOLDE:<p th:text="${compte.solde}" >FCFA</p>
+</div>
+	<div class="header-bottom">
+		<div class="wrap">
+			<div class="single">
+				<div class="heading">
+					<h3>Mon compte</h3>
+			<div class="section group">
+					<div class="col span_2_of_contact">
+						<div class="contact-form">
+						<table style="width: 75%; margin: 0 auto; border-collapse: collapse;">
+  <tr>
+    <th style="padding: 8px; border: 1px solid #ccc; background-color: #f2f2f2; font-weight: bold;">Numero</th>
+    <th style="padding: 8px; border: 1px solid #ccc; background-color: #f2f2f2; font-weight: bold;">Nom</th>
+    <th style="padding: 8px; border: 1px solid #ccc; background-color: #f2f2f2; font-weight: bold;">Solde(FCFA)</th>
+    <th style="padding: 8px; border: 1px solid #ccc; background-color: #f2f2f2; font-weight: bold;">Statut</th>
+  </tr>
+  <tr th:each="compte1:${compteclient}">
+    <td th:text="${compte1.user.numcni}"  style="padding: 8px; border: 1px solid #ccc;"></td>
+    <td th:text="${compte1.user.username}" style="padding: 8px; border: 1px solid #ccc;"></td>
+    <td th:text="${compte1.solde}" style="padding: 8px; border: 1px solid #ccc;"></td>
+        
+    <td th:text="${compte1.status}" style="padding: 8px; border: 1px solid #ccc;"></td>
+  </tr>
+  
+</table>
+ <button style="background-color: rgb(186, 189, 182); color: rgb(255, 255, 255); border: none; padding: 6px 12px; cursor: pointer;"><a th:href="@{/updateanonce}"><h3>mise à jour</h3></a></button>
+	<button class="tablinks active" onclick="afficherFormulaire()" style="background-color: rgb(186, 189, 182); color: #fff; border: none; padding: 6px 12px; cursor: pointer;"><a><h3>tranfert d'argent</h3></a></button>
+				<button class="tablinks active" onclick="afficherFormulaire1()" style="background-color: rgb(186, 189, 182); color: #fff; border: none; padding: 6px 12px; cursor: pointer;"><a><h3>retrait</h3></a></button>
+				<button class="tablinks active" onclick="afficherFormulaire2()" style="background-color: rgb(186, 189, 182); color: #fff; border: none; padding: 6px 12px; cursor: pointer;"><a><h3> valider un retrait</h3></a></button>	
+						<div id="mon-formulaire">			
+						<h3>dépot</h3>
+                        <font color="red">[[${messagedepotagent2}]]</font>
+							<form method="post" th:action="@{/depot}" th:object="${Compte}">
+								<div>
+								
+									<span>
+										<label>mon numéro</label>
+									</span>
+									
+									<span>
+									 <select class="textbox" name="numéroAgent" id="idagent"  required>
+                                       
+                                        <div th:each="compte:${compteclient}"><option th:value="${compte.user.numcni}"><b th:text="${compte.user.numcni}"></b></option></div>
+                                   </select>
+			
+									</span>
+								</div>
+								<div>
+									<span>
+										<label>montant</label>
+									</span>
+									<span>
+										<input name="somme" type="number" class="textbox">
+									</span>
+								</div>
+								
+								<div>
+									<span>
+										<label>numero bénéficiaire</label>
+									</span>
+									      <input name="numéroDestinataire" type="text" class="textbox">
+									
+									<span>
+									
+			
+									</span>
+								</div>
+								
+								<div>
+									<span>
+										<input type="submit" value="Submit">
+									</span>
+								</div>
+							</form>
+						</div>
+						<div id="mon-formulaire1">			
+						<h3>lancer un retrait</h3>
+                        <font color="red">[[${messageretraitagent2}]]</font>
+							<form method="post" th:action="@{/retrait}" th:object="${Compte}">
+								<div>
+								
+									<span>
+										<label>mon numéro</label>
+									</span>
+									
+									<span>
+									 <select class="textbox" name="numéroAgent" id="idagent"  required>
+                                       
+                                        <div th:each="compte:${compteclient}"><option th:value="${compte.user.numcni}"><b th:text="${compte.user.numcni}"></b></option></div>
+                                   </select>
+			
+									</span>
+								</div>
+								<div>
+									<span>
+										<label>montant</label>
+									</span>
+									<span>
+										<input name="somme" type="number" class="textbox">
+									</span>
+								</div>
+								
+								<div>
+									<span>
+										<label>numero bénéficiaire</label>
+									</span>
+									      <input name="numéroDestinataire" type="text" class="textbox">
+									
+									<span>
+									
+			
+									</span>
+								</div>
+								
+								<div>
+									<span>
+										<input type="submit" value="Submit">
+									</span>
+								</div>
+							</form>
+						</div>
+						<div id="mon-formulaire2">
+						        	<table style="width: 75%; margin: 0 auto; border-collapse: collapse;">
+  <tr>
+    <th style="padding: 8px; border: 1px solid #ccc; background-color: #f2f2f2; font-weight: bold;">Titre</th>
+    <th style="padding: 8px; border: 1px solid #ccc; background-color: #f2f2f2; font-weight: bold;">description</th>
+    <th style="padding: 8px; border: 1px solid #ccc; background-color: #f2f2f2; font-weight: bold;">Solde(FCFA)</th>
+    <th style="padding: 8px; border: 1px solid #ccc; background-color: #f2f2f2; font-weight: bold;">Action</th>
+  </tr>
+  <tr th:each="compte1:${annonceretrait}">
+    <td th:text="${compte1.titre}"  style="padding: 8px; border: 1px solid #ccc;"></td>
+    <td th:text="${compte1.description}" style="padding: 8px; border: 1px solid #ccc;"></td>
+    <td th:text="${compte1.somme}" style="padding: 8px; border: 1px solid #ccc;"></td>
+        
+    <td style="padding: 8px; border: 1px solid #ccc;">
+     <button style="background-color: #f2f2f2; color: #fff; border: none; padding: 6px 12px; cursor: pointer;"><a th:href="@{/validretrait(numAgent=${compte1.numdest},numbenef=${compte1.user.numcni},somme=${compte1.somme},idanonce=${compte1.id})}"><h3>Autoriser</h3></a></button>
+	<button style="background-color:#f2f2f2; color: #fff; border: none; padding: 6px 12px; cursor: pointer;"><a th:href="@{/anoncesupcl(id=${compte1.id})}"><h3>refuser</h3></a></button>
+				
+    </td>
+  </tr>
+  
+</table>
+						
+						</div>
+					</div>
+					</div>
+		
+			
+				</div>
+				
+				
+				
+				
+				<div class="about-top">
+					<div class="about-topgrids">
+						<div class="about-topgrid1">
+							
+	
+ 
+							
+								
+						</div>
+					</div>
+					
+						
+						
+						
+					
+					<div class="clear"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="footer">
+		<div class="wrap">
+			<div class="footer-top">
+				<div class="col_1_of_5 span_1_of_5">
+					<div class="footer-grid twitts">
+						<h3>Latest Tweets</h3>
+						<p>
+							<label>@Lorem ipsum</label>dolor sit amet, consectetur adipisicing elit.</p>
+						<span>10 minutes ago</span>
+						<p>
+							<label>@consectetur</label>dolor sit amet, consectetur adipisicing elit.</p>
+						<span>15 minutes ago</span>
+					</div>
+				</div>
+				<div class="col_1_of_5 span_1_of_5">
+					<div class="footer-grid center-grid">
+						<h3>Recent posts</h3>
+						<ul>
+							<li>
+								<a href="#">eiusmod temporinc</a>
+							</li>
+							<li>
+								<a href="#">adipisicing elit, sed</a>
+							</li>
+							<li>
+								<a href="#">mod tempor incididunt</a>
+							</li>
+							<li>
+								<a href="#">dipisicing elit, sed do</a>
+							</li>
+							<li>
+								<a href="#">eiusmod temporinc</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="col_1_of_5 span_1_of_5">
+					<div class="footer-grid twitts">
+						<h3>Our Company</h3>
+						<div class="f_menu">
+							<ul>
+								<li>About your Company Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh eui</li>
+								<li>Terms &amp; conditions Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh eui</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div class="col_1_of_5 span_1_of_5">
+					<div class="call_info">
+						<p class="txt_3">Call us toll free:</p>
+						<p class="txt_4">1 800 234 23456</p>
+					</div>
+				</div>
+				<div class="col_1_of_5 span_1_of_5">
+					<div class="footer-grid twitts">
+						<h3>Get in touch</h3>
+						<ul class="follow_icon">
+							<li>
+								<a href="#" style="opacity: 1;">
+									<img src="images/follow_icon.png" alt="">
+								</a>
+							</li>
+							<li>
+								<a href="#" style="opacity: 1;">
+									<img src="images/follow_icon1.png" alt="">
+								</a>
+							</li>
+							<li>
+								<a href="#" style="opacity: 1;">
+									<img src="images/follow_icon2.png" alt="">
+								</a>
+							</li>
+							<li>
+								<a href="#" style="opacity: 1;">
+									<img src="images/follow_icon3.png" alt="">
+								</a>
+							</li>
+							<li>
+								<a href="#" style="opacity: 1;">
+									<img src="images/follow_icon4.png" alt="">
+								</a>
+							</li>
+							<li>
+								<a href="#" style="opacity: 1;">
+									<img src="images/follow_icon5.png" alt="">
+								</a>
+							</li>
+						</ul>
+						<p>+1 111-111-1111</p>
+						<span>
+							<a href="mailto:info@example.com">support(at)carssale.com</a>
+						</span>
+					</div>
+				</div>
+				<div class="clear"></div>
+			</div>
+		</div>
+	</div>
+	<div class="copy-right">
+		<div class="wrap">
+			<p>Copyright &copy; 2023 annonces de ventes de voiture. All Rights Reserved | Design by ousmane lagrange
+				<a href="#"> Groupes 12</a>
+			</p>
+		</div>
+	</div>
+	<script>
+		function afficherFormulaire() {
+			var formulaire = document.getElementById("mon-formulaire");
+			if (formulaire.style.display === "none") {
+				formulaire.style.display = "block";
+			} else {
+				formulaire.style.display = "none";
+			}
+		}
+		function afficherFormulaire1() {
+			var formulaire = document.getElementById("mon-formulaire1");
+			if (formulaire.style.display === "none") {
+				formulaire.style.display = "block";
+			} else {
+				formulaire.style.display = "none";
+			}
+		}
+		function afficherFormulaire2() {
+			var formulaire = document.getElementById("mon-formulaire2");
+			if (formulaire.style.display === "none") {
+				formulaire.style.display = "block";
+			} else {
+				formulaire.style.display = "none";
+			}
+		}
+	</script>
+</body>
+
+</html>
